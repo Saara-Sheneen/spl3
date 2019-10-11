@@ -8,6 +8,16 @@ from imutils import face_utils
 from scipy.spatial import distance as dist
 import matplotlib.pyplot as plt
 
+def rect_to_bb(rect):
+	
+	x = rect.left()
+	y = rect.top()
+	w = rect.right() - x
+	h = rect.bottom() - y
+
+	
+	return (x, y, w, h)
+
 
 
 grid_x=[]
