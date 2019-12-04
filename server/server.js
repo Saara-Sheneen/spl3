@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 var command = path.join(__dirname, '/../run.sh')
 
 
-app.get('/', (request, response) => {
+app.post('/', (request, response) => {
     
     exec('python trial.py ' + request.body.ip + ' ' + request.body.type,
         (error, stdout, stderr) => {
