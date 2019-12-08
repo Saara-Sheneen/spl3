@@ -18,7 +18,7 @@ import sys
 
 #app = Flask(__name__)
 
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+#face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 ip = sys.argv[1]
 _ip = ''
 for ch in ip:
@@ -91,6 +91,8 @@ def capturing_video_frame():
 
 def gray_image(vs):
         ret,frame = vs.read()
+        if ret is False:
+                return ret,frame 
         frame = imutils.resize(frame, width=450)
         gray_image = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
         return gray_image, frame
@@ -144,11 +146,14 @@ def main():
         k=0
         while True:                                       
                 gray,frame = gray_image(vs)
-                faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-                for(x,y,w,h) in faces:
-                        cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
-                        roi_gray = gray[y:y+h, x:x+w]
-                        roi_color = frame[y:y+h, x:x+w]
+                if gray is False:
+                        print("no object is found.please provide correct Ip address")
+                        break
+                #faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+                #for(x,y,w,h) in faces:
+                        #cv2.rectangle(frame,(x,y),(x+w,y+h),(255,0,0),2)
+                        #roi_gray = gray[y:y+h, x:x+w]
+                        #roi_color = frame[y:y+h, x:x+w]
                 
                         
                 rects = detector(gray, 0)
@@ -207,6 +212,7 @@ def main():
         #vs.stop()
         vs.release()
         cv2.destroyAllWindows()
+        print("Terminated")
 
 
 main()

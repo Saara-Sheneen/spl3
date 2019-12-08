@@ -101,6 +101,21 @@ public class AlertActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .build();
+
+        soundPool = new SoundPool.Builder()
+                .setMaxStreams(6)
+                .setAudioAttributes(audioAttributes)
+                .build();
+        sound = soundPool.load(this, R.raw.alarm, 1);
+    }
+
     private void doRequest(String ip){
         try {
             Thread.sleep(10 * 1000);
@@ -130,7 +145,6 @@ public class AlertActivity extends AppCompatActivity {
                 Toast.makeText(AlertActivity.this, "Request Failed Try Again!!!", Toast.LENGTH_LONG)
                         .show();
                 System.out.println(e.toString());
-                System.out.println("++++++++++++++++++++++++++++");
             }
 
             @Override
@@ -147,16 +161,16 @@ public class AlertActivity extends AppCompatActivity {
     }
 
     public void onStopClick(View view){
-        soundPool.play(sound, 1, 1, 0, 0, 1);
-
         myRef.setValue("inactive");
+        finish();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        myRef.setValue("inactive");
         soundPool.release();
-        soundPool = null;
+        //soundPool = null;
     }
 
 }

@@ -11,9 +11,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-var command = path.join(__dirname, '/../run.sh')
-
-
 app.post('/', (request, response) => {
     
     exec('python trial.py ' + request.body.ip + ' ' + request.body.type,
@@ -24,7 +21,7 @@ app.post('/', (request, response) => {
                 console.log(`exec error: ${error}`);
             }
         });
-    response.send(request.body.ip)
+    response.send("Called successful")
 })
 
 app.listen(port, (err) => {
