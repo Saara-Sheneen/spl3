@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,11 +19,14 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
 
+import in.shadowfax.proswipebutton.ProSwipeButton;
+
 
 public class MainActivity extends AppCompatActivity {
 
     TextView txtIp;
     Button btnStart;
+    ProSwipeButton proSwipeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,9 +35,67 @@ public class MainActivity extends AppCompatActivity {
 
         txtIp = findViewById(R.id.editTextIp);
         btnStart = findViewById(R.id.btnStart);
+        proSwipeBtn = (ProSwipeButton) findViewById(R.id.awesome_btn);
 
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        System.out.println(proSwipeBtn.getState());
+        //proSwipeBtn.showResultIcon(false);
+        //proSwipeBtn.init();
+        //proSwipeBtn.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        proSwipeBtn.setOnSwipeListener(new ProSwipeButton.OnSwipeListener() {
+            @Override
+            public void onSwipeConfirm() {
+                // user has swiped the btn. Perform your async operation now
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        // task success! show TICK icon in ProSwipeButton
+                        String appName = "DroidCam";
+                        String packageName = "com.dev47apps.droidcam";
+                        String port = ":4747";
+                        boolean t = openApp(MainActivity.this, appName, packageName);
+                        try {
+                            Thread.sleep(5 * 1000);
+                        }
+                        catch(InterruptedException ex) {
+                            Thread.currentThread().interrupt();
+                        }
+                        if (t) {
+                            Toast.makeText(MainActivity.this, getLocalIpAddress(), Toast.LENGTH_LONG)
+                                    .show();
+                            String ip = getLocalIpAddress() + port;
+                            String _ip = getLocalIpAddress() + port;
 
+                            for (int i = 0; i < ip.length(); i++){
+                                if ( ip.charAt(i) == '.' ) ip = replace(ip, i, '-');
+                                if ( ip.charAt(i) == ':' ) ip = replace(ip, i, '_');
+                            }
+
+                            if (!ip.equals("")){
+                                Intent intent = new Intent(MainActivity.this, AlertActivity.class);
+                                intent.putExtra("ip", _ip);
+                                intent.putExtra("userId", ip);
+                                startActivity(intent);
+                            }
+                        }
+                        proSwipeBtn.showResultIcon(true);
+                        System.out.println(proSwipeBtn.getState());
+                        // false if task failed
+                    }
+                }, 2000);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        System.out.println(proSwipeBtn.getState());
+        proSwipeBtn.setState(240);
     }
 
     public void onStartClick(View view){

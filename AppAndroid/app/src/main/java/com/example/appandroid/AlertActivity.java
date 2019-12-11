@@ -42,7 +42,7 @@ public class AlertActivity extends AppCompatActivity {
     private OkHttpClient client;
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    public static final String BASE_URL = "http://172.16.20.107:3000/";
+    public static final String BASE_URL = "http://10.100.101.21:3000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,12 +117,7 @@ public class AlertActivity extends AppCompatActivity {
     }
 
     private void doRequest(String ip){
-        try {
-            Thread.sleep(10 * 1000);
-        }
-        catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
+
         System.out.println(ip);
         JSONObject jsonObject = new JSONObject();
         try {

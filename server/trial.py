@@ -51,8 +51,8 @@ grid_y1=[]
 ax1=fig.add_subplot(212)
 #fig.show()
 k=0
-EYE_AR_THRESH = 0.3
-EYE_AR_CONSEC_FRAMES = 8
+EYE_AR_THRESH = 0.25
+EYE_AR_CONSEC_FRAMES = 6
 
 def eye_aspect_ratio(eye):
         
