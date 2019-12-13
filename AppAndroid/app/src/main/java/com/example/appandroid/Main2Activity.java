@@ -54,7 +54,9 @@ public class Main2Activity extends AppCompatActivity {
     private SoundPool soundPool;
     private int sound;
     private OkHttpClient client;
-    String currentDateTimeString;
+    private String currentDateTimeString = "";
+    private String alertCount = "";
+    private int alertCounter = 0;
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     public static final String BASE_URL = "http://172.16.22.49:3000/";
@@ -106,7 +108,10 @@ public class Main2Activity extends AppCompatActivity {
                 if (value.equals("sleepy")){
                     soundPool.play(sound, 1, 1, 0, 0, 1);
                     //DATE AND TIME
-                    currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+                    alertCounter = alertCounter + 1;
+                    alertCount = "Alert Time ";
+                    currentDateTimeString += alertCount + alertCounter + ": "
+                            + DateFormat.getDateTimeInstance().format(new Date()) + "\n";
 
                     textView.setText(currentDateTimeString);
                     System.out.println(currentDateTimeString);
@@ -126,7 +131,7 @@ public class Main2Activity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean t = openApp(Main2Activity.this, appName, packageName);
                 try {
-                    Thread.sleep(3 * 1000);
+                    Thread.sleep(0 * 1000);
                 }
                 catch(InterruptedException ex) {
                     Thread.currentThread().interrupt();
@@ -178,7 +183,7 @@ public class Main2Activity extends AppCompatActivity {
 
     public void stop(View view){
         myRef.setValue("inactive");
-        finish();
+        //finish();
     }
 
     @Override
