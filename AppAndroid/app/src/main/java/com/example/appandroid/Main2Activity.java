@@ -183,6 +183,10 @@ public class Main2Activity extends AppCompatActivity {
 
     public void stop(View view){
         myRef.setValue("inactive");
+        textView.setText("");
+        currentDateTimeString = "";
+        alertCounter = 0;
+
         //finish();
     }
 

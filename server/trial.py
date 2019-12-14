@@ -126,7 +126,7 @@ def calculate_convex_hull_and_draw_contours(left_eye_location,right_eye_location
         mouthHull=cv2.convexHull(mouth_location)
         cv2.drawContours(frame, [leftEyeHull], -1, (0, 255, 0), 1)
         cv2.drawContours(frame, [rightEyeHull], -1, (0, 255, 0), 1)
-        cv2.drawContours(frame, [mouthHull], -1, (0, 0, 255), 1)
+        #cv2.drawContours(frame, [mouthHull], -1, (0, 0, 255), 1)
 
 
 detector = dlib.get_frontal_face_detector()

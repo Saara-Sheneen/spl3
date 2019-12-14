@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from collections import OrderedDict
 import argparse
 
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('./resources/app/haarcascade_frontalface_default.xml')
 
 def rect_to_bb(rect):
 	
@@ -155,7 +155,7 @@ def provide_alert(COUNTER, ALARM_ON):
                 if COUNTER >= EYE_AR_CONSEC_FRAMES:
                         if not ALARM_ON:
                                 ALARM_ON = True
-                                os.system("aplay alarm.wav")
+                                os.system("aplay ./resources/app/alarm.wav")
                         cv2.putText(frame, "DROWSINESS ALERT!", (10, 30),cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
         else: 
                 COUNTER = 0
@@ -232,7 +232,7 @@ while True:
 				
                                 if not ALARM_ON:
                                         ALARM_ON = True
-                                        os.system("aplay alarm.wav")
+                                        os.system("aplay ./resources/app/alarm.wav")
 
 					
 
