@@ -59,7 +59,7 @@ public class Main2Activity extends AppCompatActivity {
     private int alertCounter = 0;
 
     public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-    public static final String BASE_URL = "http://172.16.22.49:3000/";
+    public static final String BASE_URL = "http://10.100.101.21:3000/"; //"http://172.16.22.49:3000/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
